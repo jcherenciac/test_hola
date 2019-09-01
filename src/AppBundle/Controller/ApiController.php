@@ -28,9 +28,7 @@ class ApiController extends Controller
 
     public function __construct(ApiService $apiService)
     {
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $this->serializer = new Serializer($normalizers, $encoders);
+
         $this->apiService = $apiService;
     }
 
@@ -63,12 +61,8 @@ class ApiController extends Controller
     {
 
         $data = $request->getContent();
-        $user = $this->serializer->deserialize($data,User::class,'json');
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
-//
-        return new JsonResponse($user);
+        $response = $this->apiService->create($data);
+        return new JsonResponse($response);
     }
 
     /**
@@ -86,10 +80,8 @@ class ApiController extends Controller
      */
     public function deleteAction(Request $request,$id)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
+        $response = $this->apiService->remove($id);
+        return new Response($response, Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 
 }

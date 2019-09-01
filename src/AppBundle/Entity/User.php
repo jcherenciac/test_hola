@@ -10,8 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
+const ROLE_LIST = ['ADMIN','PAGE_1','PAGE_2'];
+
 class User
 {
+
     /**
      * @var int
      *
@@ -123,6 +126,27 @@ class User
     public function getRoles()
     {
         return $this->roles;
+    }
+
+    public function isValid(){
+        $isValidName = !empty($this->getName());
+        $isValidPassword = !empty($this->getPassword());
+        $isValidRoleList = !empty($this->getRoles()) && $this->isValidRole();
+
+        return $isValidName
+            && $isValidPassword
+            && $isValidRoleList;
+    }
+
+    private function isValidRole(){
+        foreach( $this->getRoles() as $role ){
+            if(!in_array($role,ROLE_LIST)){
+                return false;
+            }
+        }
+        return true;
+
+
     }
 }
 
