@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\ApiService;
 use AppBundle\Entity\User;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,14 +22,16 @@ use Symfony\Component\Serializer\Serializer;
 class ApiController extends Controller
 {
     protected $serializer;
-    private $roles = ['ADMIN','PAGE_1','PAGE_2'];
+//    private $roles = ['ADMIN','PAGE_1','PAGE_2'];
+    private $apiService;
 
 
-    public function __construct()
+    public function __construct(ApiService $apiService)
     {
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
         $this->serializer = new Serializer($normalizers, $encoders);
+        $this->apiService = $apiService;
     }
 
     /**
@@ -36,24 +39,21 @@ class ApiController extends Controller
      */
     public function listAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $users = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findAll();
-
+        $users = $this->apiService->list();
         $responseJson = $this->serializer->serialize($users,'json');
         return new Response($responseJson, Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 
     /**
      * @Route("/user/{id}", name="get", methods={"GET"})
+     * @param $id
+     * @return Response
      */
-    public function getAction(Request $request, $id)
+    public function getAction($id)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
+        $users = $this->apiService->get($id);
+        $responseJson = $this->serializer->serialize($users,'json');
+        return new Response($responseJson, Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 
     /**
