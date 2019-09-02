@@ -19,5 +19,22 @@ class DefaultController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/page/{num}", name="page")
+     * @param $num
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function pageAction($num)
+    {
+        $user = '';
+        // replace this example code with whatever you need
+        return $this->render('default/page.html.twig', [
+            'num' => $num
+        ]);
+    }
+
+
+
+
 
 }

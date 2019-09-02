@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\ApiService;
-use AppBundle\Entity\User;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,6 +29,9 @@ class ApiController extends Controller
     {
 
         $this->apiService = $apiService;
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $this->serializer = new Serializer($normalizers, $encoders);
     }
 
     /**
@@ -49,17 +51,17 @@ class ApiController extends Controller
      */
     public function getAction($id)
     {
-        $users = $this->apiService->get($id);
-        $responseJson = $this->serializer->serialize($users,'json');
-        return new Response($responseJson, Response::HTTP_OK, ['content-type' => 'application/json']);
+        $response = $this->apiService->get($id);
+        return new JsonResponse($response);
     }
 
     /**
      * @Route("/new", name="create", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
      */
     public function createAction(Request $request)
     {
-
         $data = $request->getContent();
         $response = $this->apiService->create($data);
         return new JsonResponse($response);
@@ -67,21 +69,26 @@ class ApiController extends Controller
 
     /**
      * @Route("/update/{id}", name="update", methods={"PUT"})
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
      */
     public function updateAction(Request $request,$id)
     {
-
-
-
+        $data = $request->getContent();
+        $response = $this->apiService->update($data, $id);
+        return new JsonResponse($response);
     }
 
     /**
      * @Route("/delete/{id}", name="delete", methods={"DELETE"})
+     * @param $id
+     * @return JsonResponse
      */
-    public function deleteAction(Request $request,$id)
+    public function deleteAction($id)
     {
         $response = $this->apiService->remove($id);
-        return new Response($response, Response::HTTP_OK, ['content-type' => 'application/json']);
+        return new JsonResponse($response);
     }
 
 }

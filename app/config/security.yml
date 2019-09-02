@@ -3,22 +3,34 @@
 security:
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    access_denied_url: /login
+    encoders:
+        AppBundle\Entity\User: plaintext
     providers:
-        in_memory:
-            memory: ~
+        db_provider:
+            entity:
+                class: AppBundle:User
+                property: name
+
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        main:
+#        api:
+#            pattern: ^/api/
+#            provider: db_provider
+#            http_basic: ~
+        default:
             anonymous: ~
-            # activate different ways to authenticate
-
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+            provider: db_provider
+            form_login:
+                login_path: /login
+                check_path: /login_check
+            logout:
+                path: /logout
+                target: /
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_PAGE_1, ROLE_PAGE_2]
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/page/1, roles: ROLE_PAGE_1 }
+        - { path: ^/page/2, roles: ROLE_PAGE_2 }

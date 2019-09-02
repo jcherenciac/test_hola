@@ -3,16 +3,17 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * User
+ * AppBundle\Entity\User
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-const ROLE_LIST = ['ADMIN','PAGE_1','PAGE_2'];
+//const ROLE_LIST = ['ADMIN','PAGE_1','PAGE_2'];
 
-class User
+class User implements UserInterface
 {
 
     /**
@@ -128,6 +129,25 @@ class User
         return $this->roles;
     }
 
+    public function getUsername()
+    {
+        return $this->name;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+
+    public function eraseCredentials()
+    {
+    }
+
+
+    /**
+     * @return bool
+     */
     public function isValid(){
         $isValidName = !empty($this->getName());
         $isValidPassword = !empty($this->getPassword());
@@ -138,9 +158,13 @@ class User
             && $isValidRoleList;
     }
 
+    /**
+     * @return bool
+     */
     private function isValidRole(){
+        $roleList = ['ROLE_ADMIN','ROLE_PAGE_1','ROLE_PAGE_2'];
         foreach( $this->getRoles() as $role ){
-            if(!in_array($role,ROLE_LIST)){
+            if(!in_array($role,$roleList)){
                 return false;
             }
         }
