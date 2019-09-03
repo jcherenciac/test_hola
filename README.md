@@ -42,5 +42,7 @@ Ver resultado Code Snifer (Estandar: PRS2)
 ```bash
 phpcs --standard=PSR2 ./src/AppBundle/
 ```
-
+## Herramientas de prueba
+En el proyecto se ha incluido un archivo con la  
+[colección POSTMAN](./HOLA_TEST_API.postman_collection.json) con la que se realizaron las pruebas de la API REST.
    

@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "c8aefc40-45f3-4050-ae19-bf090d60e7f0",
+		"name": "HOLA_TEST_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List Users",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://testhola.local/app_dev.php/api/users",
+					"protocol": "http",
+					"host": [
+						"testhola",
+						"local"
+					],
+					"path": [
+						"app_dev.php",
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ger User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Page1",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://testhola.local/app_dev.php/api/user/3",
+					"protocol": "http",
+					"host": [
+						"testhola",
+						"local"
+					],
+					"path": [
+						"app_dev.php",
+						"api",
+						"user",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"name\": \"Juan8\",\n        \"password\": \"1234\",\n        \"roles\": [\n            \"ROLE_PAGE_2\"\n        ],\n        \"username\": \"Juan2\",\n        \"salt\": null,\n        \"valid\": true\n    }"
+				},
+				"url": {
+					"raw": "http://testhola.local/app_dev.php/api/new",
+					"protocol": "http",
+					"host": [
+						"testhola",
+						"local"
+					],
+					"path": [
+						"app_dev.php",
+						"api",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove User",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"name\": \"Juan2\",\n        \"password\": \"1234\",\n        \"roles\": [\n            \"ROLE_PAGE_2\"\n        ],\n        \"username\": \"Juan2\",\n        \"salt\": null,\n        \"valid\": true\n    }"
+				},
+				"url": {
+					"raw": "http://testhola.local/app_dev.php/api/update/3",
+					"protocol": "http",
+					"host": [
+						"testhola",
+						"local"
+					],
+					"path": [
+						"app_dev.php",
+						"api",
+						"update",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://testhola.local/app_dev.php/api/delete/15",
+					"protocol": "http",
+					"host": [
+						"testhola",
+						"local"
+					],
+					"path": [
+						"app_dev.php",
+						"api",
+						"delete",
+						"15"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "1234",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "Admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "78d1d5ee-24d1-4e27-a937-7dc457db7e36",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5bff91d8-8345-48b8-93a1-a8ccc8ab78fe",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
