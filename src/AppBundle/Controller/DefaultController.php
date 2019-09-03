@@ -32,9 +32,4 @@ class DefaultController extends Controller
             'num' => $num
         ]);
     }
-
-
-
-
-
 }

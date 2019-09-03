@@ -3,7 +3,6 @@
 
 namespace AppBundle;
 
-
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +10,6 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
-
 
 class ApiService
 {
@@ -39,7 +37,8 @@ class ApiService
     /**
      * @return array
      */
-    public function list(){
+    public function list()
+    {
         return $this->em
             ->getRepository(User::class)
             ->findAll();
@@ -49,13 +48,14 @@ class ApiService
      * @param $id
      * @return array
      */
-    public function get($id){
+    public function get($id)
+    {
         $response = [];
         $user = $this->em
             ->getRepository(User::class)
             ->find($id);
 
-        if ( !$user ) {
+        if (!$user) {
             $response['statusCode'] = Response::HTTP_NOT_FOUND;
             $response['statusMsg'] = 'Usuario no encontrado';
             return $response;
@@ -63,7 +63,7 @@ class ApiService
 
         $response['statusCode'] = Response::HTTP_OK;
         $response['statusMsg'] = 'Usuario encontrado.';
-        $response['data'] = json_decode($this->serializer->serialize($user,'json'));
+        $response['data'] = json_decode($this->serializer->serialize($user, 'json'));
         return $response;
     }
 
@@ -75,7 +75,7 @@ class ApiService
     {
         $response = [];
         $user = $this->serializer->deserialize($data, User::class, 'json');
-        if ( $user->isValid() ){
+        if ($user->isValid()) {
             $this->em->persist($user);
             $this->em->flush();
 
@@ -86,7 +86,6 @@ class ApiService
         $response['statusCode'] = Response::HTTP_PARTIAL_CONTENT;
         $response['statusMsg'] = 'Datos incompletos o incorrectos.';
         return $response;
-
     }
 
     /**
@@ -102,7 +101,7 @@ class ApiService
             ->find($id);
 
         $newUserData = $this->serializer->deserialize($data, User::class, 'json');
-        if ( $newUserData->isValid() ){
+        if ($newUserData->isValid()) {
             $user->setName($newUserData->getName());
             $user->setPassword($newUserData->getPassword());
             $user->setRoles($newUserData->getRoles());
@@ -123,13 +122,14 @@ class ApiService
      * @param $id
      * @return array
      */
-    public function remove($id){
+    public function remove($id)
+    {
         $response = [];
         $user = $this->em
             ->getRepository(User::class)
             ->find($id);
 
-        if ( !$user ) {
+        if (!$user) {
             $response['statusCode'] = Response::HTTP_NOT_FOUND;
             $response['statusMsg'] = 'Usuario no encontrado';
             return $response;
@@ -141,5 +141,4 @@ class ApiService
         $response['statusMsg'] = 'Usuario borrado';
         return $response;
     }
-
 }

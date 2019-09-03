@@ -148,7 +148,8 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function isValid(){
+    public function isValid()
+    {
         $isValidName = !empty($this->getName());
         $isValidPassword = !empty($this->getPassword());
         $isValidRoleList = !empty($this->getRoles()) && $this->isValidRole();
@@ -161,16 +162,14 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    private function isValidRole(){
+    private function isValidRole()
+    {
         $roleList = ['ROLE_ADMIN','ROLE_PAGE_1','ROLE_PAGE_2'];
-        foreach( $this->getRoles() as $role ){
-            if(!in_array($role,$roleList)){
+        foreach ($this->getRoles() as $role) {
+            if (!in_array($role, $roleList)) {
                 return false;
             }
         }
         return true;
-
-
     }
 }
-

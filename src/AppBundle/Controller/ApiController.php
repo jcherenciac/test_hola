@@ -39,7 +39,7 @@ class ApiController extends Controller
     public function listAction()
     {
         $users = $this->apiService->list();
-        $responseJson = $this->serializer->serialize($users,'json');
+        $responseJson = $this->serializer->serialize($users, 'json');
         return new Response($responseJson, Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 
@@ -72,7 +72,7 @@ class ApiController extends Controller
      * @param $id
      * @return JsonResponse
      */
-    public function updateAction(Request $request,$id)
+    public function updateAction(Request $request, $id)
     {
         $data = $request->getContent();
         $response = $this->apiService->update($data, $id);
@@ -89,5 +89,4 @@ class ApiController extends Controller
         $response = $this->apiService->remove($id);
         return new JsonResponse($response);
     }
-
 }

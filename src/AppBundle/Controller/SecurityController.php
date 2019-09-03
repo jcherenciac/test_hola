@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +32,8 @@ class SecurityController extends Controller
      * @Route("/error403", name="error403")
      */
 
-    public function error403(Request $request){
+    public function error403(Request $request)
+    {
         $error = $request->attributes->get(Security::ACCESS_DENIED_ERROR);
         $route = $error->getSubject()->attributes->get('_route');
         $errorUrl = $this->generateUrl(
@@ -44,5 +44,4 @@ class SecurityController extends Controller
             'errorUrl' => $errorUrl,
         ]);
     }
-
 }

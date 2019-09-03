@@ -35,5 +35,4 @@ class LoadUserData implements ORMFixtureInterface
 
         $manager->flush();
     }
-
 }
