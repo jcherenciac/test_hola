@@ -8,8 +8,17 @@
     - phpcs
     - phpcbf
 ## Instalación 
+Instalación de vendors
 ```
 composer install
+```
+Creación de la BD:
+```
+doctrine:database:create
+```
+Generación de la estructura de BD:
+```
+doctrine:schema:create
 ```
 ## Configuración
 Modificar en  `app/config/parameters.yml` los siguientes datos en función  de los la configuración de la BD.
