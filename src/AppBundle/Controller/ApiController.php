@@ -21,7 +21,6 @@ use Symfony\Component\Serializer\Serializer;
 class ApiController extends Controller
 {
     protected $serializer;
-//    private $roles = ['ADMIN','PAGE_1','PAGE_2'];
     private $apiService;
 
 

@@ -3,7 +3,6 @@
 security:
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
-    access_denied_url: /login
     encoders:
         AppBundle\Entity\User: plaintext
     providers:
@@ -14,23 +13,29 @@ security:
 
 
     firewalls:
-#        api:
-#            pattern: ^/api/
-#            provider: db_provider
-#            http_basic: ~
         default:
             anonymous: ~
+            pattern: ^(?!/api)
             provider: db_provider
+            access_denied_url: /error403
             form_login:
                 login_path: /login
                 check_path: /login_check
+                use_referer: true
             logout:
                 path: /logout
                 target: /
+        api:
+            pattern: ^/api/*
+            provider: db_provider
+            methods: [GET, POST,PUT,DELETE]
+            http_basic: ~
     role_hierarchy:
         ROLE_ADMIN: [ROLE_PAGE_1, ROLE_PAGE_2]
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/page/1, roles: ROLE_PAGE_1 }
         - { path: ^/page/2, roles: ROLE_PAGE_2 }
+        - { path: ^/api(/users|/user), roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api(?!/users|/user), roles: ROLE_ADMIN }
+
