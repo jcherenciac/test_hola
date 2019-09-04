@@ -2,8 +2,8 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\ApiService;
 
+use AppBundle\Services\ApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
